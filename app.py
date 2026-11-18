@@ -1,17 +1,22 @@
+import warnings
+warnings.filterwarnings("ignore")
+
 import streamlit as st
+
+# ---------- PAGE CONFIG (MUST BE FIRST STREAMLIT CALL) ----------
+st.set_page_config(
+    page_title="SMART HIRE AI",
+    page_icon="🎯",
+    layout="wide"
+)
+
+import os
 from auth import show_auth_page
 from instructions import show_instructions
 from resume import resume_module
 from interview import interview_module
 from hr_panel import hr_panel
 from results import show_results
-
-# ---------- PAGE CONFIG ----------
-st.set_page_config(
-    page_title="SMART HIRE AI",
-    page_icon="🎯",
-    layout="wide"
-)
 
 # ---------- GLOBAL STYLE SYSTEM ----------
 st.markdown("""
@@ -225,9 +230,12 @@ if "stage" not in st.session_state:
 col1, col2 = st.columns([1, 6])
 
 with col1:
-    try:
-        st.image("logo.png", width=80)
-    except:
+    if os.path.exists("logo.png"):
+        try:
+            st.image("logo.png", width=80)
+        except Exception:
+            st.markdown("<h1 style='text-align: center; margin: 0; font-size: 50px;'>🤖</h1>", unsafe_allow_html=True)
+    else:
         st.markdown("<h1 style='text-align: center; margin: 0; font-size: 50px;'>🤖</h1>", unsafe_allow_html=True)
 
 with col2:

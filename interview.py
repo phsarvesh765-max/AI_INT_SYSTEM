@@ -39,7 +39,8 @@ except Exception as e:
 # =====================================================
 # TAB + FULLSCREEN SECURITY DETECTION (PERSISTENT VIA SESSIONSTORAGE)
 # =====================================================
-st.markdown("""
+def inject_proctoring_security():
+    st.markdown("""
 <script>
 // Initialize warning count from sessionStorage so it survives Streamlit reruns
 if (!sessionStorage.getItem("warningCount")) {
@@ -1797,6 +1798,7 @@ ROUNDS = [
 # MAIN INTERVIEW MODULE
 # =====================================================
 def interview_module():
+    inject_proctoring_security()
     skills = st.session_state.get("skills", [])
     user = st.session_state.get("username", "Candidate")
     domain = st.session_state.get("domain", "Software Engineering")
