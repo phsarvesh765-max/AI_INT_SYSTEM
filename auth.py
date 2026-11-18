@@ -972,30 +972,30 @@ def show_auth_page():
                             (user_val, role_val)
                         ).fetchone()
 
-                    # Verify matching credentials
-                    if res and verify_password(res[0], pwd_val):
-                        show_success("Login Successful! Preparing workspace... ✅")
-                        st.session_state.logged_in = True
-                        st.session_state.username = user_val
-                        st.session_state.user_id = res[1]
-                        st.session_state.role = role_val
+                        # Verify matching credentials
+                        if res and verify_password(res[0], pwd_val):
+                            show_success("Login Successful! Preparing workspace... ✅")
+                            st.session_state.logged_in = True
+                            st.session_state.username = user_val
+                            st.session_state.user_id = res[1]
+                            st.session_state.role = role_val
 
-                        if role_val == "HR Admin":
-                            st.session_state.stage = "hr"
+                            if role_val == "HR Admin":
+                                st.session_state.stage = "hr"
+                            else:
+                                st.session_state.stage = "instructions"
+                            st.rerun()
                         else:
-                            st.session_state.stage = "instructions"
-                        st.rerun()
-                    else:
-                        # Password or Role incorrect
-                        # Columns are (user_id, username, password, role, email)
-                        stored_pwd = existing_user[2]
-                        stored_role = existing_user[3]
-                        if stored_role != role_val:
-                            show_error(f"Access Role '{role_val}' does not match registered profile role.")
-                        elif not verify_password(stored_pwd, pwd_val):
-                            show_error("Incorrect Password entered. Please verify details and try again.")
-                        else:
-                            show_error("Authentication failed. Please verify your credentials.")
+                            # Password or Role incorrect
+                            # Columns are (user_id, username, password, role, email)
+                            stored_pwd = existing_user[2]
+                            stored_role = existing_user[3]
+                            if stored_role != role_val:
+                                show_error(f"Access Role '{role_val}' does not match registered profile role.")
+                            elif not verify_password(stored_pwd, pwd_val):
+                                show_error("Incorrect Password entered. Please verify details and try again.")
+                            else:
+                                show_error("Authentication failed. Please verify your credentials.")
 
         st.markdown('</div>', unsafe_allow_html=True)
 
